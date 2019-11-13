@@ -1,0 +1,4 @@
+﻿  p12.cpp
+C:\Users\서주현\source\repos\C++\7주차\week07\p12\p12.cpp(5): warning C4172: 지역 변수 또는 임시: a의 주소를 반환하고 있습니다.
+C:\Users\서주현\source\repos\C++\7주차\week07\p12\p12.cpp(6): warning C4172: 지역 변수 또는 임시: b의 주소를 반환하고 있습니다.
+  p12.vcxproj -> C:\Users\서주현\source\repos\C++\7주차\week07\Debug\p12.exe
