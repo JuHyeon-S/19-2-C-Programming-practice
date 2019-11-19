@@ -19,6 +19,7 @@ public:
 		return p;
 	}
 	Shape* getNext() { return next; }
+	void setNext(Shape *n) { this->next = n; }
 };
 
 class Circle : public Shape {
@@ -43,21 +44,21 @@ protected:
 };
 
 class UI {
-	static int selectNum;
-	static int shapeNum;
-	static int deleteNum;
 public:
 	static int select() {
+		int selectNum;
 		cout << "삽입:1, 삭제:2, 모두보기:3, 종료:4 >>";
 		cin >> selectNum;
 		return selectNum;
 	}
 	static int shapeN() {
+		int shapeNum;
 		cout << "선:1, 원:2, 사각형:3 >>";
 		cin >> shapeNum;
 		return shapeNum;
 	}
 	static int deleteShape() {
+		int deleteNum;
 		cout << "삭제하고자 하는 도형의 인덱스 >>";
 		cin >> deleteNum;
 		return deleteNum;
@@ -72,17 +73,37 @@ class GraphicEditor {
 public :
 	GraphicEditor() { }
 	void call() {
+		bool check = true;
 		cout << "그래픽 에디터입니다." << endl;
 
-		switch (UI::select())
-		{
-		case 1:
-			create(UI::shapeN());
-			break;
-		case 2:
-			delShape(UI::deleteShape());
-			break;
-		}
+		while (check) {
+			switch (UI::select())
+			{
+			case 1:
+				create(UI::shapeN());
+				break;
+			case 2:
+				delShape(UI::deleteShape());
+				break;
+			case 3:
+			{
+				Shape* p = pStart;
+				for (int i = 0; i < cnt; i++) {
+					cout << i << ": ";
+					p->paint();
+					p = p->getNext();
+				}
+				break;
+			}
+			case 4:
+				check = false;
+				break;
+			default:
+				check = false;
+				cout << "잘못 입력하였습니다." << endl;
+				break;
+			}
+		}	
 	}
 
 	void create(int n) {
@@ -119,6 +140,19 @@ public :
 	}
 
 	void delShape(int n) {
-
+		Shape* p = pStart;
+		Shape* q = pStart;
+		for (int i = 0; i < n; i++) {
+			p = q;
+			q = q->getNext();
+		}
+		p->setNext(q->getNext());
+		cnt--;
 	}
 };
+
+int main() {
+	GraphicEditor* ge = new GraphicEditor();
+	ge->call();
+	delete ge;
+}
